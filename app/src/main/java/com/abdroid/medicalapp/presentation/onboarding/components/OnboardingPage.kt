@@ -40,7 +40,7 @@ fun OnBoardingPage(
             contentScale = ContentScale.Crop
         )
         Column (
-            modifier = modifier.fillMaxSize().padding(bottom = 150.dp),
+            modifier = modifier.fillMaxSize().padding(start = 10.dp, bottom = 150.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Bottom
         )

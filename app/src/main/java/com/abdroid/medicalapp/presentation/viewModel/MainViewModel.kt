@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdroid.medicalapp.domain.use_cases.AppEntryUseCases
-import com.abdroid.medicalapp.presentation.navigation.screenNames.Route
+import com.abdroid.medicalapp.presentation.navigation.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn

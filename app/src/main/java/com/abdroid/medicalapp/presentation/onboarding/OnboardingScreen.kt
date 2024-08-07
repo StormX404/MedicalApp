@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abdroid.medicalapp.R
 import com.abdroid.medicalapp.presentation.onboarding.components.OnBoardingPage
-import com.abdroid.medicalapp.presentation.onboarding.viewModel.OnBoardingEvents
 import com.abdroid.medicalapp.ui.theme.AlbertSansFont
 import kotlinx.coroutines.launch
 

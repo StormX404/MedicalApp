@@ -111,6 +111,80 @@ fun EmailTextField(
 }
 
 @Composable
+fun NameTextField(
+    hintValue: String,
+    leadingIcon: Painter,
+    name: String,
+    onNameChange: (String) -> Unit
+) {
+    val transformedName = remember(name) {
+        name.split(" ").joinToString(" ") { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } }
+    }
+    var isNameFocused by remember { mutableStateOf(false) }
+
+    BasicTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp)
+            .border(
+                1.dp,
+                colorResource(id = R.color.text_field_border),
+                shape = RoundedCornerShape(22.dp)
+            )
+            .clip(RoundedCornerShape(22.dp))
+            .background(colorResource(id = R.color.text_field_bg))
+            .padding(8.dp)
+            .onFocusChanged { focusState ->
+                isNameFocused = focusState.isFocused
+            },
+        value = transformedName,
+        onValueChange = { newValue ->
+            if (newValue.length <= 15) {
+                onNameChange(newValue)
+            }
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle(
+            color = colorResource(id = R.color.text_field_text),
+            fontSize = 16.sp,
+            fontFamily = InterFont,
+            fontWeight = FontWeight.Normal,
+        ),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = leadingIcon,
+                    contentDescription = null,
+                    tint = if (isNameFocused) Color(0xFF50AAFA) else colorResource(id = R.color.text_field_hint)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Box(modifier = Modifier.weight(1f)) {
+                    if (name.isEmpty()) {
+                        Text(
+                            text = hintValue,
+                            fontSize = 16.sp,
+                            fontFamily = InterFont,
+                            fontWeight = FontWeight.Normal,
+                            color = colorResource(id = R.color.text_field_hint)
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        }
+    )
+}
+
+@Composable
 fun PasswordTextField(
     hintValue: String,
     leadingIcon: Painter,
@@ -202,7 +276,7 @@ fun PasswordTextField(
 
 @Preview
 @Composable
-private fun TextFieldPrev() {
+private fun PassTextFieldPrev() {
     PasswordTextField(hintValue = "Enter your password", leadingIcon = painterResource(id = R.drawable.security_safe), password = "", onPasswordChange = {}, isPasswordOpen = true, onTogglePasswordVisibility = {})
     //EmailTextField(hintValue = "Enter your email", leadingIcon = painterResource(id = R.drawable.sms), email = "", onEmailChange = {})
 }
@@ -211,4 +285,9 @@ private fun TextFieldPrev() {
 private fun EmailTextFieldPrev() {
     //PasswordTextField(hintValue = "Enter your password", leadingIcon = painterResource(id = R.drawable.security_safe), password = "", onPasswordChange = {}, isPasswordOpen = true, onTogglePasswordVisibility = {})
     EmailTextField(hintValue = "Enter your email", leadingIcon = painterResource(id = R.drawable.sms), email = "", onEmailChange = {})
+}
+@Preview
+@Composable
+private fun NameTextFieldPrev() {
+    NameTextField(hintValue = "Enter your name", leadingIcon = painterResource(id = R.drawable.profile_outlined), name = "", onNameChange = {})
 }

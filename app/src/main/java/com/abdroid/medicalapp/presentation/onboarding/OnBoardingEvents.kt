@@ -1,4 +1,4 @@
-package com.abdroid.medicalapp.presentation.onboarding.viewModel
+package com.abdroid.medicalapp.presentation.onboarding
 
 sealed class OnBoardingEvents {
 

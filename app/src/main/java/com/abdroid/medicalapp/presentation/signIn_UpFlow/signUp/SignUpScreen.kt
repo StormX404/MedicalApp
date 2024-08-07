@@ -1,6 +1,5 @@
-package com.abdroid.medicalapp.presentation.signIn_UpFlow.signIn
+package com.abdroid.medicalapp.presentation.signIn_UpFlow.signUp
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,8 +34,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,18 +46,19 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.abdroid.medicalapp.R
 import com.abdroid.medicalapp.common.EmailTextField
+import com.abdroid.medicalapp.common.NameTextField
 import com.abdroid.medicalapp.common.PasswordTextField
-import com.abdroid.medicalapp.common.SignInWith
 import com.abdroid.medicalapp.ui.theme.InterFont
 
 @Composable
-fun SignInScreen(
-    navController: NavController,
+fun SignUpScreen(
+    navController: NavController
 ) {
-
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isPasswordOpen by remember { mutableStateOf(false) }
+    var name by remember { mutableStateOf("") }
+    var isChecked by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     Column(
@@ -66,11 +71,11 @@ fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Icon(
                 modifier = Modifier
                     .size(40.dp)
@@ -86,7 +91,7 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.weight(.8f))
             Text(
-                text = "Login",
+                text = "Sign Up",
                 fontSize = 20.sp,
                 fontFamily = InterFont,
                 fontWeight = FontWeight.SemiBold,
@@ -95,11 +100,15 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-
         Column(
             modifier = Modifier.padding(top = 30.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
+            NameTextField(
+                hintValue = "Enter your name",
+                leadingIcon = painterResource(id = R.drawable.profile_outlined),
+                name = name, onNameChange = { newName -> name = newName }
+            )
             EmailTextField(
                 hintValue = "Enter your email",
                 leadingIcon = painterResource(id = R.drawable.sms),
@@ -115,19 +124,38 @@ fun SignInScreen(
             )
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
+                Checkbox(
+                    checked = isChecked,
+                    colors = CheckboxDefaults.colors(
+                        checkmarkColor = Color.White,
+                        checkedColor = Color(0xFF50AAFA),
+                        uncheckedColor = Color.Gray,
+                    ),
+                    onCheckedChange = { isChecked = it }
+                )
                 Text(
-                    text = "Forgot Password?",
-                    fontSize = 14.sp,
+                    text = buildAnnotatedString {
+                        append("I agree to the ")
+                        withStyle(style = SpanStyle(color = Color(0xFF50AAFA))) {
+                            append("Terms of Service")
+                        }
+                        append(" and ")
+                        withStyle(style = SpanStyle(color = Color(0xFF50AAFA))) {
+                            append("Privacy Policy")
+                        }
+                    },
                     fontFamily = InterFont,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF50AAFA),
-                    textAlign = TextAlign.Center,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = colorResource(id = R.color.main_text),
+                    modifier = Modifier.padding(start = 8.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(10.dp))
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -142,7 +170,7 @@ fun SignInScreen(
             ) {
                 Text(
                     modifier = Modifier,
-                    text = "Login",
+                    text = "Sign Up",
                     fontSize = 16.sp,
                     fontFamily = InterFont,
                     fontWeight = FontWeight.SemiBold,
@@ -158,7 +186,7 @@ fun SignInScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Don't have an account?",
+                    text = "Already Have Account?",
                     fontFamily = InterFont,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
@@ -169,54 +197,22 @@ fun SignInScreen(
                         .padding(horizontal = 5.dp)
                         .clickable(
                             onClick = {
-                                navController.navigate("signUpScreen")
+                                navController.navigate("SignInScreen")
                             },
                         ),
-                    text = "SignUp",
+                    text = "Sign In",
                     fontFamily = InterFont,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF50AAFA),
                 )
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Image(painter = painterResource(id = R.drawable.line),
-                    contentDescription = "line",)
-                Text(
-                    modifier = Modifier
-                        .padding(horizontal = 5.dp)
-                        .clickable(
-                            onClick = {
-
-                            },
-                        ),
-                    text = "OR",
-                    fontFamily = InterFont,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = colorResource(id = R.color.second_text),
-                )
-                Image(painter = painterResource(id = R.drawable.line),
-                    contentDescription = "line",)
-            }
-            SignInWith(icon = R.drawable.google, text = "Sign In with Google", onClick = {})
-
-            SignInWith(icon = R.drawable.apple, text = "Sign In with Apple", onClick = {})
-
-            SignInWith(icon = R.drawable.facebook, text = "Sign In with Facebook" , onClick = {})
         }
-
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun SignInScreenPrev() {
-    SignInScreen(navController = rememberNavController())
+private fun SignUpScreenPrev() {
+    SignUpScreen(navController = rememberNavController())
 }

@@ -80,7 +80,7 @@ fun GetStartedScreen(
                 .width(263.dp)
                 .height(56.dp),
             onClick = {
-                navController.navigate("loginScreen")
+                navController.navigate("signInScreen")
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF50AAFA),
@@ -107,6 +107,7 @@ fun GetStartedScreen(
                     shape = RoundedCornerShape(85.dp)
                 ),
             onClick = {
+                navController.navigate("signUpScreen")
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.background),

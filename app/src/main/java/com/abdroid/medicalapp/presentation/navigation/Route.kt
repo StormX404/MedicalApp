@@ -1,4 +1,4 @@
-package com.abdroid.medicalapp.presentation.navigation.screenNames
+package com.abdroid.medicalapp.presentation.navigation
 
 sealed class Route(
     val route: String,
@@ -11,8 +11,9 @@ sealed class Route(
 
     data object GetStartedScreen : Route(route = "getStartedScreen")
 
-    data object LoginScreen : Route(route = "loginScreen")
+    data object SignInScreen : Route(route = "signInScreen")
 
+    data object SignUpScreen : Route(route = "signUpScreen")
 
     data object OnBoardingScreen : Route(route = "onBoardingScreen")
 

@@ -8,10 +8,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.abdroid.medicalapp.presentation.GetStartedScreen
 import com.abdroid.medicalapp.presentation.SplashScreen
-import com.abdroid.medicalapp.presentation.navigation.screenNames.Route
 import com.abdroid.medicalapp.presentation.onboarding.OnBoardingScreen
 import com.abdroid.medicalapp.presentation.onboarding.viewModel.OnboardingViewModel
 import com.abdroid.medicalapp.presentation.signIn_UpFlow.signIn.SignInScreen
+import com.abdroid.medicalapp.presentation.signIn_UpFlow.signUp.SignUpScreen
 
 @Composable
 fun NavGraph(
@@ -44,8 +44,11 @@ fun NavGraph(
             composable(route = Route.GetStartedScreen.route) {
                 GetStartedScreen(navController)
             }
-            composable(route = Route.LoginScreen.route) {
+            composable(route = Route.SignInScreen.route) {
                 SignInScreen(navController)
+            }
+            composable(route = Route.SignUpScreen.route) {
+                SignUpScreen(navController)
             }
         }
 

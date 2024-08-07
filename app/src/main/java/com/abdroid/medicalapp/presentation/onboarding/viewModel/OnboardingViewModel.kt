@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdroid.medicalapp.domain.use_cases.AppEntryUseCases
+import com.abdroid.medicalapp.presentation.onboarding.OnBoardingEvents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
