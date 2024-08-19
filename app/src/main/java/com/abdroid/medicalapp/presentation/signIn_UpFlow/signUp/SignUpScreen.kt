@@ -78,7 +78,7 @@ fun SignUpScreen(
         ) {
             Icon(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(20.dp)
                     .clip(CircleShape)
                     .clickable(
                         onClick = {
@@ -89,7 +89,7 @@ fun SignUpScreen(
                 contentDescription = "",
                 tint = colorResource(id = R.color.main_text),
             )
-            Spacer(modifier = Modifier.weight(.8f))
+            Spacer(modifier = Modifier.weight(.9f))
             Text(
                 text = "Sign Up",
                 fontSize = 20.sp,
@@ -141,12 +141,12 @@ fun SignUpScreen(
                 Text(
                     text = buildAnnotatedString {
                         append("I agree to the ")
-                        withStyle(style = SpanStyle(color = Color(0xFF50AAFA))) {
+                        withStyle(style = SpanStyle(color = colorResource(id = R.color.text_button),)) {
                             append("Terms of Service")
                         }
                         append(" and ")
-                        withStyle(style = SpanStyle(color = Color(0xFF50AAFA))) {
-                            append("Privacy Policy")
+                        withStyle(style = SpanStyle(color = colorResource(id = R.color.text_button),)) {
+                            append("Terms of Service")
                         }
                     },
                     fontFamily = InterFont,
@@ -164,7 +164,7 @@ fun SignUpScreen(
 
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF50AAFA),
+                    colorResource(id = R.color.main_button),
                 ),
                 shape = RoundedCornerShape(size = 85.dp)
             ) {
@@ -204,7 +204,7 @@ fun SignUpScreen(
                     fontFamily = InterFont,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xFF50AAFA),
+                    color = colorResource(id = R.color.text_button),
                 )
             }
         }

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.gms.google.services)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -63,7 +64,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -91,6 +92,39 @@ dependencies {
 
     // Splash Screen :->
     implementation(libs.androidx.core.splashscreen)
+
+    // Accompanist :->
+    implementation (libs.accompanist.pager)
+    implementation (libs.accompanist.pager.indicators)
+    implementation (libs.accompanist.systemuicontroller)
+
+    //Coil
+    implementation(libs.coil.compose)
+
+    //firebase
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.play.services.auth)
+    implementation(libs.googleid)
+
+    //Room
+    implementation (libs.androidx.room.runtime)
+
+    //Compose Navigation
+    implementation(libs.androidx.navigation.compose.v277)
+
+    //Compose Foundation
+    implementation (libs.androidx.foundation)
+
+    //Paging 3
+    implementation (libs.androidx.paging.runtime.ktx)
+    implementation (libs.androidx.paging.compose)
+
+
+    //animation
+    implementation (libs.androidx.animation)
+    implementation (libs.androidx.fragment.ktx)
+    implementation (libs.androidx.activity.ktx)
+
 }
 
 kotlin {

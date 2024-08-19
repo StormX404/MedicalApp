@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#FFFFFF</color>
-    <color name="splash_color">#F7BC1E</color>
-    <color name="main_button">#000000</color>
-    <color name="scanner_button">#F7BC1E</color>
-    <color name="second_button">#F7BC1E</color>
-    <color name="button_text">#FFFFFF</color>
+
+    <color name="splash_color">#50AAFA</color>
+
+    <!--button colors-->
+    <color name="main_button">#50AAFA</color>
+    <color name="text_button">#50AAFA</color>
+    <color name="main_icon_button">#FFFFFF</color>
+    <color name="second_button_border">#50AAFA</color>
+    <color name="main_button_text">#FFFFFF</color>
+    <color name="second_button_text">#50AAFA</color>
+    <!--text colors-->
     <color name="main_text">#000000</color>
-    <color name="slider_main_text">#FFFFFF</color>
-    <color name="second_text">#6A6A6A</color>
-    <color name="text_field_bg">#F7F7F9</color>
-    <color name="text_field_icon">#000000</color>
-    <color name="text_field_border">#eaecef</color>
-    <color name="text_field_hint">#b6bcc2</color>
+    <color name="second_text">#abb1b8</color>
+    <!--text field colors-->
+    <color name="text_field_bg">#fcfcfc</color>
+    <color name="text_field_icon">#b3b9bf</color>
+    <color name="text_field_border">#E2E2E2</color>
+    <color name="text_field_hint">#b3b9bf</color>
     <color name="text_field_text">#000000</color>
-    <color name="text_field_eye">#6A6A6A</color>
+    <color name="text_field_eye">#b3b9bf</color>
+    <!--custom tab colors-->
+    <color name="custom_tab_bg">#f9fafb</color>
+    <color name="custom_tab_selected_color">#ffffff</color>
+    <color name="custom_tab_un_selected_color">#b3b9bf</color>
+    <color name="custom_tab_indicator_color">#50AAFA</color>
+
     <color name="back_button">#F7F7F9</color>
-    <color name="indicator">#141414</color>
-    <color name="un_selected_dots">#EBEBEB</color>
     <color name="google_text">#000000</color>
-    <color name="nav_bar_selected_icon">#F7BC1E</color>
-    <color name="nav_bar_selected_text">#F7BC1E</color>
-    <color name="nav_bar_un_selected_icon">#000000</color>
-    <color name="nav_bar_un_selected_text">#000000</color>
-    <color name="bottom_bar">#F8F8F8</color>
+    <!--nav bar colors-->
+    <color name="nav_bar_selected_icon">#50AAFA</color>
+    <color name="nav_bar_selected_text">#50AAFA</color>
+    <color name="nav_bar_un_selected_icon">#b3b9bf</color>
+    <color name="nav_bar_un_selected_text">#b3b9bf</color>
+
+    <color name="bottom_bar">#ffffff</color>
     <color name="divider">#EBEBEB</color>
+    <color name="shimmer">#f3f4f8</color>
+    <color name="colored_icon">#50AAFA</color>
+    <color name="black_icon">#000000</color>
+    <color name="rate_box_color">#e8f3f1</color>
+    <color name="dialog_icon_background">#f5f8ff</color>
+    <color name="dialog_icon_color">#50AAFA</color>
 
 </resources>

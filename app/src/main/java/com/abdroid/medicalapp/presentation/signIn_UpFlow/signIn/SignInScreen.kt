@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.abdroid.medicalapp.R
+import com.abdroid.medicalapp.common.CustomDialog
 import com.abdroid.medicalapp.common.EmailTextField
 import com.abdroid.medicalapp.common.PasswordTextField
 import com.abdroid.medicalapp.common.SignInWith
@@ -55,6 +56,17 @@ fun SignInScreen(
     var password by rememberSaveable { mutableStateOf("") }
     var isPasswordOpen by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val successDialog = remember { mutableStateOf(false) }
+
+    if (successDialog.value) {
+        CustomDialog(
+            title = "Yeay!Welcome Back",
+            desc = "Once again you login successfully into medidoc app" ,
+            buttonText = "Go to home",
+            onDismiss = { successDialog.value = false
+                navController.navigate("homeScreen")}
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -73,7 +85,7 @@ fun SignInScreen(
         ){
             Icon(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(20.dp)
                     .clip(CircleShape)
                     .clickable(
                         onClick = {
@@ -84,7 +96,7 @@ fun SignInScreen(
                 contentDescription = "",
                 tint = colorResource(id = R.color.main_text),
             )
-            Spacer(modifier = Modifier.weight(.8f))
+            Spacer(modifier = Modifier.weight(.9f))
             Text(
                 text = "Login",
                 fontSize = 20.sp,
@@ -119,11 +131,14 @@ fun SignInScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
+                    modifier = Modifier.clickable {
+                        navController.navigate("forgotPasswordScreen")
+                    },
                     text = "Forgot Password?",
                     fontSize = 14.sp,
                     fontFamily = InterFont,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF50AAFA),
+                    color = colorResource(id = R.color.text_button),
                     textAlign = TextAlign.Center,
                 )
             }
@@ -133,10 +148,10 @@ fun SignInScreen(
                     .fillMaxWidth()
                     .height(60.dp),
                 onClick = {
-
+                    successDialog.value = true
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF50AAFA),
+                    containerColor = colorResource(id = R.color.main_button),
                 ),
                 shape = RoundedCornerShape(size = 85.dp)
             ) {
@@ -176,7 +191,7 @@ fun SignInScreen(
                     fontFamily = InterFont,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xFF50AAFA),
+                    color = colorResource(id = R.color.text_button),
                 )
             }
             Row(

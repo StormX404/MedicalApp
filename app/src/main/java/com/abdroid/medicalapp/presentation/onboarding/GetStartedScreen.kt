@@ -1,4 +1,4 @@
-package com.abdroid.medicalapp.presentation
+package com.abdroid.medicalapp.presentation.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,7 +82,7 @@ fun GetStartedScreen(
                 navController.navigate("signInScreen")
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF50AAFA),
+                containerColor = colorResource(id = R.color.main_button),
             ),
             shape = RoundedCornerShape(size = 85.dp)
         ) {
@@ -93,7 +92,7 @@ fun GetStartedScreen(
                 fontSize = 16.sp,
                 fontFamily = InterFont,
                 fontWeight = FontWeight.SemiBold,
-                color = Color.White,
+                color = colorResource(id = R.color.main_button_text),
                 textAlign = TextAlign.Start
             )
         }
@@ -103,7 +102,7 @@ fun GetStartedScreen(
                 .height(56.dp)
                 .border(
                     1.dp,
-                    Color(0xFF50AAFA),
+                    color = colorResource(id = R.color.second_button_border),
                     shape = RoundedCornerShape(85.dp)
                 ),
             onClick = {
@@ -120,7 +119,7 @@ fun GetStartedScreen(
                 fontSize = 16.sp,
                 fontFamily = InterFont,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF50AAFA),
+                color = colorResource(id = R.color.second_button_text),
                 textAlign = TextAlign.Start
             )
         }

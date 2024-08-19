@@ -185,6 +185,77 @@ fun NameTextField(
 }
 
 @Composable
+fun PhoneTextField(
+    hintValue: String,
+    leadingIcon: Painter,
+    phoneNumber: String,
+    onPhoneNumberChange: (String) -> Unit
+) {
+    var isPhoneNumberFocused by remember { mutableStateOf(false) }
+
+    BasicTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp)
+            .border(
+                1.dp,
+                colorResource(id = R.color.text_field_border),
+                shape = RoundedCornerShape(22.dp)
+            )
+            .clip(RoundedCornerShape(22.dp))
+            .background(colorResource(id = R.color.text_field_bg))
+            .padding(8.dp)
+            .onFocusChanged { focusState ->
+                isPhoneNumberFocused = focusState.isFocused
+            },
+        value = phoneNumber,
+        onValueChange = { newValue ->
+            if (newValue.length <= 15) {
+                onPhoneNumberChange(newValue)
+            }
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle(
+            color = colorResource(id = R.color.text_field_text),
+            fontSize = 16.sp,
+            fontFamily = InterFont,
+            fontWeight = FontWeight.Normal,
+        ),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = leadingIcon,
+                    contentDescription = null,
+                    tint = if (isPhoneNumberFocused) Color(0xFF50AAFA) else colorResource(id = R.color.text_field_hint)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Box(modifier = Modifier.weight(1f)) {
+                    if (phoneNumber.isEmpty()) {
+                        Text(
+                            text = hintValue,
+                            fontSize = 16.sp,
+                            fontFamily = InterFont,
+                            fontWeight = FontWeight.Normal,
+                            color = colorResource(id = R.color.text_field_hint)
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        }
+    )
+}
+
+@Composable
 fun PasswordTextField(
     hintValue: String,
     leadingIcon: Painter,

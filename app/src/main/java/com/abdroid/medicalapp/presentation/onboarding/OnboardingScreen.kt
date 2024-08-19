@@ -1,6 +1,7 @@
 package com.abdroid.medicalapp.presentation.onboarding
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,6 +24,7 @@ import com.abdroid.medicalapp.presentation.onboarding.components.OnBoardingPage
 import com.abdroid.medicalapp.ui.theme.AlbertSansFont
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
     onEvent: (OnBoardingEvents) -> Unit
@@ -59,7 +62,7 @@ fun OnBoardingScreen(
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF50AAFA),
+                        containerColor = colorResource(id = R.color.main_button),
                     ),
                     shape = RoundedCornerShape(size = 85.dp)
                 ) {
@@ -89,20 +92,21 @@ fun OnBoardingScreen(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF50AAFA),
+                            containerColor = colorResource(id = R.color.main_button),
                         ),
                         shape = CircleShape
                     ) {
                         Icon(
                             modifier = Modifier.size(20.dp),
                             painter = painterResource(id = R.drawable.arrow_narrow_right),
+                            tint = colorResource(id = R.color.main_icon_button),
                             contentDescription = "icon"
                         )
                     }
                     CircularProgressIndicator(
                         progress = { animatedProgress },
                         modifier = Modifier.size(80.dp),
-                        color = Color(0xFF50AAFA),
+                        color = colorResource(id = R.color.main_button),
                         strokeWidth = 1.2.dp,
                         trackColor = Color.White,
                     )
