@@ -45,6 +45,8 @@ import com.abdroid.medicalapp.ui.theme.InterFont
 @Composable
 fun ForgotPasswordScreen(navController: NavController) {
 
+    //This screen is for display only and is not fully programmed
+
     var email by rememberSaveable { mutableStateOf("") }
 
     var phoneNumber by rememberSaveable { mutableStateOf("") }

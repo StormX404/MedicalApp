@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: AuthRepository,
     private val database: DatabaseReference // Injecting the DatabaseReference for better testability
 ) : ViewModel() {
 
@@ -47,16 +46,17 @@ class HomeViewModel @Inject constructor(
                     childSnapshot.getValue(Doctor::class.java)
                 }
                 doctorsList = newDoctorsList
-                isLoading = false // Update isLoading when data is loaded
+                isLoading = false
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // Handle error
-                isLoading = false // Update isLoading even if there was an error
+                isLoading = false
                 Log.e("FirebaseError", "Error fetching top doctors data", error.toException())
             }
         })
     }
+
     private fun fetchArticlesData() {
         val articleRef = database.child("Trending Articles")
 

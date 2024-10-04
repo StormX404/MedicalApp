@@ -10,18 +10,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.abdroid.medicalapp.presentation.navigation.NavGraph
+import com.abdroid.medicalapp.presentation.navigation.Route
 import com.abdroid.medicalapp.presentation.viewModel.MainViewModel
 import com.abdroid.medicalapp.ui.theme.MedicalAppTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -34,33 +35,50 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         installSplashScreen().apply {
-            setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
+            setKeepOnScreenCondition { viewModel.splashCondition.value }
         }
+
         enableEdgeToEdge()
+
         setContent {
             MedicalAppTheme(dynamicColor = false) {
-                val isSystemInDarkMode = isSystemInDarkTheme()
-                val systemController = rememberSystemUiController()
 
-                SideEffect {
-                    systemController.setSystemBarsColor(
-                        color = Color.Transparent,
-                        darkIcons = !isSystemInDarkMode
-                    )
-                }
+                SetupSystemUI()
 
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                    NavGraph(startDestination = viewModel.startDestination.value)
+                    NavigateBasedOnUser(viewModel)
                 }
             }
         }
     }
 
     private fun setLocaleToEnglish() {
-        val locale = Locale("en") // English locale
+        val locale = Locale("en")
         Locale.setDefault(locale)
-        val config = Configuration()
-        config.locale = locale
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
         resources.updateConfiguration(config, resources.displayMetrics)
+    }
+
+    @Composable
+    private fun NavigateBasedOnUser(viewModel: MainViewModel) {
+        val isUserVerified = viewModel.currentUser?.isEmailVerified == true
+        NavGraph(
+            startDestination = if (isUserVerified) Route.HomeNavigation.route
+            else viewModel.startDestination.value
+        )
+    }
+
+    @Composable
+    private fun SetupSystemUI() {
+        val isSystemInDarkMode = isSystemInDarkTheme()
+        val systemController = rememberSystemUiController()
+
+        SideEffect {
+            systemController.setSystemBarsColor(
+                color = Color.Transparent,
+                darkIcons = !isSystemInDarkMode
+            )
+        }
     }
 }

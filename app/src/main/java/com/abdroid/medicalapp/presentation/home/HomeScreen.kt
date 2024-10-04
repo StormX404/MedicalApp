@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -35,8 +34,8 @@ import com.abdroid.medicalapp.presentation.home.components.IconItem
 import com.abdroid.medicalapp.common.SearchBar
 import com.abdroid.medicalapp.common.ShimmerEffect
 import com.abdroid.medicalapp.presentation.home.components.SliderBanner
-import com.abdroid.medicalapp.presentation.home.components.TopDoctorHomeCard
-import com.abdroid.medicalapp.presentation.home.components.TrendingArticleCard
+import com.abdroid.medicalapp.common.TopDoctorHomeCard
+import com.abdroid.medicalapp.common.TrendingArticleCard
 import com.abdroid.medicalapp.presentation.navigation.Route
 import com.abdroid.medicalapp.ui.theme.InterFont
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -45,22 +44,20 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @Composable
 fun HomeScreen(
     navController: NavController,
-    navigateToSearch: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val doctorsList = viewModel.doctorsList
     val articlesList = viewModel.articlesList
     val isLoading = viewModel.isLoading
 
-    if (isLoading){
+    if (isLoading) {
         ShimmerEffect()
-    }else{
+    } else {
         Column(
             modifier = Modifier
                 .background(colorResource(id = R.color.background))
                 .fillMaxSize()
                 .statusBarsPadding()
-                .systemBarsPadding()
                 .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -71,7 +68,8 @@ fun HomeScreen(
             ) {
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth().padding(top = 30.dp),
+                        .fillMaxWidth()
+                        .padding(top = 30.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
@@ -135,7 +133,7 @@ fun HomeScreen(
                         )
                         Text(
                             modifier = Modifier.clickable {
-                                navController.navigate("topDoctorScreen")
+                                navController.navigate(Route.TopDoctorScreen.route)
                             },
                             text = "See all",
                             fontSize = 16.sp,
@@ -199,5 +197,4 @@ fun HomeScreen(
             }
         }
     }
-
 }

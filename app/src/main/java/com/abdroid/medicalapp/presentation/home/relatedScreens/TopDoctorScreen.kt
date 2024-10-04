@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.abdroid.medicalapp.R
 import com.abdroid.medicalapp.common.TopAppBar
 import com.abdroid.medicalapp.presentation.home.HomeViewModel
-import com.abdroid.medicalapp.presentation.home.components.TopDoctorCard
+import com.abdroid.medicalapp.common.TopDoctorCard
 
 @Composable
 fun TopDoctorScreen(

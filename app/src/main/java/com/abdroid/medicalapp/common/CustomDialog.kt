@@ -1,6 +1,7 @@
 package com.abdroid.medicalapp.common
 
 import  androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -57,7 +58,9 @@ fun CustomDialog(
 
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxSize().padding(16.dp),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceAround
                     ) {
@@ -116,6 +119,104 @@ fun CustomDialog(
                                     textAlign = TextAlign.Start
                                 )
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun LogOutDialog(
+    title: String,
+    buttonText: String,
+    onDismiss: () -> Unit,
+    onContinue: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = onDismiss
+    ) {
+        Box(
+            modifier = Modifier
+        ) {
+            Column(
+                modifier = Modifier
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(350.dp)
+                        .background(
+                            color = colorResource(id = R.color.text_field_bg),
+                            shape = RoundedCornerShape(16.dp)
+                        )
+
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(90.dp)
+                                .clip(CircleShape)
+                                .background(colorResource(id = R.color.dialog_icon_background)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                modifier = Modifier.size(50.dp),
+                                painter = painterResource(id = R.drawable.logout),
+                                contentDescription = "",
+                                tint = colorResource(id = R.color.dialog_icon_color),
+                            )
+                        }
+                        Column(
+                            modifier = Modifier.padding(horizontal = 20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                        ){
+                            Text(
+                                text = title,
+                                fontFamily = InterFont,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colorResource(id = R.color.main_text),
+                                textAlign = TextAlign.Center
+                            )
+                            Button(
+                                modifier = Modifier
+                                    .width(160.dp)
+                                    .height(56.dp),
+                                onClick = {
+                                    onContinue()
+                                },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colorResource(id = R.color.main_button),
+                                ),
+                                shape = RoundedCornerShape(size = 85.dp)
+                            ) {
+                                Text(
+                                    modifier = Modifier,
+                                    text = buttonText,
+                                    fontSize = 16.sp,
+                                    fontFamily = InterFont,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color.White,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                            Text(
+                                modifier = Modifier.clickable { onDismiss() },
+                                text = "Cancel",
+                                fontSize = 16.sp,
+                                fontFamily = InterFont,
+                                fontWeight = FontWeight.SemiBold,
+                                color = colorResource(id = R.color.main_button),
+                                textAlign = TextAlign.Start
+                            )
                         }
                     }
                 }

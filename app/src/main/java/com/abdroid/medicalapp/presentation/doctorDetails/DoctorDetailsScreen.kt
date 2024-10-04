@@ -1,5 +1,6 @@
 package com.abdroid.medicalapp.presentation.doctorDetails
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
@@ -34,12 +35,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -49,62 +49,48 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abdroid.medicalapp.R
+import com.abdroid.medicalapp.common.CustomTextField
 import com.abdroid.medicalapp.common.TopAppBar
 import com.abdroid.medicalapp.domain.model.Doctor
 import com.abdroid.medicalapp.presentation.doctorDetails.components.DateItem
 import com.abdroid.medicalapp.presentation.doctorDetails.components.TimeSlotItem
-import com.abdroid.medicalapp.presentation.home.components.TopDoctorCard
+import com.abdroid.medicalapp.common.TopDoctorCard
+import com.abdroid.medicalapp.presentation.navigation.Route
 import com.abdroid.medicalapp.ui.theme.InterFont
 
 @Composable
 fun DoctorDetailsScreen(
     navController: NavController,
     doctor: Doctor,
+    viewModel: DoctorDetailsViewModel = hiltViewModel(),
 ) {
+    val context = LocalContext.current
+    val reason by viewModel.reason
+
     val dates = listOf(
-        "Mon" to 21,
-        "Tue" to 22,
-        "Wed" to 23,
-        "Thu" to 24,
-        "Fri" to 25,
-        "Sat" to 26,
-        "Sun" to 27,
-        "Mon" to 28,
-        "Tue" to 29,
-        "Wed" to 30
+        "Mon" to 21, "Tue" to 22, "Wed" to 23, "Thu" to 24,
+        "Fri" to 25, "Sat" to 26, "Sun" to 27, "Mon" to 28,
+        "Tue" to 29, "Wed" to 30
     )
 
     val timeSlots = listOf(
-        "09:00 AM" to false,
-        "10:00 AM" to true,
-        "11:00 AM" to false,
-        "01:00 PM" to false,
-        "02:00 PM" to true,
-        "03:00 PM" to true,
-        "04:00 PM" to true,
-        "07:00 PM" to true,
-        "08:00 PM" to false,
+        "09:00 AM" to false, "10:00 AM" to true, "11:00 AM" to false,
+        "01:00 PM" to false, "02:00 PM" to true, "03:00 PM" to true,
+        "04:00 PM" to true, "07:00 PM" to true, "08:00 PM" to false
     )
 
-    var selectedDayAndDate by remember { mutableStateOf(dates.first()) }
-    var selectedTimeSlot by remember { mutableStateOf<String?>(null) }
-    var isExpanded by remember { mutableStateOf(false) }
-
-    val truncatedText = if (doctor.about.length > 120) {
-        buildAnnotatedString {
+    val truncatedText = buildAnnotatedString {
+        if (doctor.about.length > 120) {
             append(doctor.about.take(120))
-            withStyle(style = SpanStyle(color = colorResource(id = R.color.text_button) ,
-                fontSize = 14.sp,
-                fontFamily = InterFont,
-                fontWeight = FontWeight.Normal)
-            ) {
+            withStyle(style = SpanStyle(color = colorResource(id = R.color.text_button), fontSize = 14.sp, fontFamily = InterFont)) {
                 append(" ...Read more")
             }
+        } else {
+            append(doctor.about)
         }
-    } else {
-        buildAnnotatedString { append(doctor.about) }
     }
 
     Box(
@@ -118,7 +104,7 @@ fun DoctorDetailsScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 80.dp)
+                .padding(bottom = 75.dp)
         ) {
             TopAppBar(
                 onDotsClick = { },
@@ -150,11 +136,11 @@ fun DoctorDetailsScreen(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
                     ) {
-                        isExpanded = true
+                        viewModel.isExpanded = true
                     },
                     contentAlignment = Alignment.CenterStart
                 ) {
-                    if (!isExpanded) {
+                    if (!viewModel.isExpanded) {
                         Text(
                             text = truncatedText,
                             fontSize = 14.sp,
@@ -167,7 +153,7 @@ fun DoctorDetailsScreen(
                 }
 
                 AnimatedVisibility(
-                    visible = isExpanded,
+                    visible = viewModel.isExpanded,
                     enter = expandVertically(animationSpec = tween(250)),
                     exit = shrinkVertically(animationSpec = tween(250))
                 ) {
@@ -189,7 +175,7 @@ fun DoctorDetailsScreen(
                             color = colorResource(id = R.color.text_button),
                             textAlign = TextAlign.Start,
                             modifier = Modifier.clickable {
-                                isExpanded = false
+                                viewModel.isExpanded = false
                             }
                         )
                     }
@@ -203,8 +189,8 @@ fun DoctorDetailsScreen(
                         DateItem(
                             day = datePair.first,
                             date = datePair.second,
-                            isSelected = selectedDayAndDate == datePair,
-                            onClick = { selectedDayAndDate = datePair }
+                            isSelected = viewModel.selectedDayAndDate == datePair,
+                            onClick = { viewModel.selectedDayAndDate = datePair }
                         )
                     }
                 }
@@ -214,7 +200,6 @@ fun DoctorDetailsScreen(
                     thickness = 1.dp,
                     color = colorResource(id = R.color.divider)
                 )
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -231,22 +216,42 @@ fun DoctorDetailsScreen(
                             val isEnabled = timeSlotPair.second
                             TimeSlotItem(
                                 time = time,
-                                isSelected = selectedTimeSlot == time,
+                                isSelected = viewModel.selectedTimeSlot == time,
                                 isEnabled = isEnabled,
-                                onClick = { if (isEnabled) selectedTimeSlot = time }
+                                onClick = { if (isEnabled) viewModel.selectedTimeSlot = time }
                             )
                         }
                     }
                 }
+                HorizontalDivider(
+                    modifier = Modifier.fillMaxWidth(),
+                    thickness = 1.dp,
+                    color = colorResource(id = R.color.divider)
+                )
+                Column (verticalArrangement = Arrangement.spacedBy(10.dp)){
+                    Text(
+                        text = "Reason",
+                        fontSize = 16.sp,
+                        fontFamily = InterFont,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colorResource(id = R.color.main_text),
+                        textAlign = TextAlign.Start,
+                    )
+                    CustomTextField(
+                        hintValue = "What is your problem?",
+                        leadingIcon = painterResource(id = R.drawable.document),
+                        text = reason , onTextChange = { newText -> viewModel.updateReason(newText) }  // Update the ViewModel's reason
+                    )
+                }
+
             }
         }
-
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             Button(
                 modifier = Modifier
                     .height(60.dp),
@@ -271,14 +276,38 @@ fun DoctorDetailsScreen(
                     .weight(.9f)
                     .padding(start = 14.dp)
                     .height(60.dp),
-                onClick = { },
+                onClick = {
+                    val selectedDay = viewModel.selectedDayAndDate?.first
+                    val selectedDate = viewModel.selectedDayAndDate?.second
+                    val selectedTimeSlot = viewModel.selectedTimeSlot
+
+                    if (selectedDay == null || selectedDate == null || selectedTimeSlot.isNullOrEmpty() || reason.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Please select day, date, time slot, and provide a reason.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // Set data in the savedStateHandle
+                        navController.currentBackStackEntry?.savedStateHandle?.apply {
+                            set("doctor", doctor)
+                            set("day", selectedDay)
+                            set("date", selectedDate)
+                            set("hour", selectedTimeSlot)
+                            set("reason", reason)  // Pass the reason to the next screen
+                        }
+
+                        // Navigate to the AppointmentScreen
+                        navController.navigate(Route.AppointmentScreen.route)
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(id = R.color.main_button),
                 ),
                 shape = RoundedCornerShape(size = 85.dp)
             ) {
                 Text(
-                    text = "Book Apointment",
+                    text = "Book Appointment",
                     fontSize = 16.sp,
                     fontFamily = InterFont,
                     fontWeight = FontWeight.SemiBold,
@@ -286,6 +315,7 @@ fun DoctorDetailsScreen(
                     textAlign = TextAlign.Start
                 )
             }
+
         }
     }
 }

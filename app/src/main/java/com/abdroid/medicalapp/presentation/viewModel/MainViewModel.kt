@@ -4,8 +4,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.abdroid.medicalapp.domain.repository.AuthRepository
 import com.abdroid.medicalapp.domain.use_cases.AppEntryUseCases
 import com.abdroid.medicalapp.presentation.navigation.Route
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val appEntryUseCases: AppEntryUseCases,
+    appEntryUseCases: AppEntryUseCases,
+    private val repository: AuthRepository
 ): ViewModel() {
 
     private val _splashCondition = mutableStateOf(true)
@@ -35,5 +38,6 @@ class MainViewModel @Inject constructor(
         }.launchIn(viewModelScope)
 
     }
-
+    val currentUser: FirebaseUser?
+        get() = repository.currentUser
 }

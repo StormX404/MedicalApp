@@ -3,29 +3,48 @@ package com.abdroid.medicalapp.presentation.message
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.abdroid.medicalapp.R
+import com.abdroid.medicalapp.presentation.message.components.ChatCard
+import com.abdroid.medicalapp.common.InsideCustomTab
+import com.abdroid.medicalapp.presentation.home.HomeViewModel
 import com.abdroid.medicalapp.ui.theme.InterFont
 
 @Composable
 fun MessageScreen(
-    navController: NavController,
-    //navigateToSearch: () -> Unit,
-    //viewModel: HomeViewModel = hiltViewModel()
+    viewModel : HomeViewModel = hiltViewModel()
 ) {
+
+    //This screen is for display only and is not fully programmed
+
+    val doctorsList = viewModel.doctorsList
+    val (selected, setSelected) = remember {
+        mutableIntStateOf(0)
+    }
+
     Column(
         modifier = Modifier
             .background(colorResource(id = R.color.background))
@@ -36,13 +55,58 @@ fun MessageScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            text = "Message Screen",
-            fontSize = 20.sp,
-            fontFamily = InterFont,
-            fontWeight = FontWeight.SemiBold,
-            color = colorResource(id = R.color.main_text),
-            textAlign = TextAlign.Center,
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically ,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                text = "Message",
+                fontSize = 24.sp,
+                fontFamily = InterFont,
+                fontWeight = FontWeight.SemiBold,
+                color = colorResource(id = R.color.main_text),
+                textAlign = TextAlign.Center,
+            )
+            Icon(
+                modifier = Modifier,
+                painter = painterResource(R.drawable.search_normal_outlined),
+                contentDescription = "",
+                tint = colorResource(id = R.color.black_icon),
+            )
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+
+        InsideCustomTab(
+            items = listOf("All", "Group" , "Private"),
+            selectedItemIndex = selected,
+            onClick = setSelected,
         )
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 30.dp),
+            verticalArrangement = Arrangement.spacedBy(30.dp)
+        ) {
+            val messages = listOf(
+                "I don't have any fever , but headache and cough , what should I do?",
+                "Hello, How can I help you?",
+                "Do you have fever?"
+            )
+
+            val times = listOf(
+                "10:24", "9:04", "08:57"
+            )
+
+            itemsIndexed(doctorsList.take(3)) { index, doctor ->
+                ChatCard(
+                    doctor = doctor,
+                    message = messages.getOrElse(index) { "Default message" },
+                    time = times.getOrElse(index) { "00:00" }
+                )
+            }
+        }
+
     }
 }

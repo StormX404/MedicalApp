@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -22,6 +22,8 @@ import com.abdroid.medicalapp.R
 import com.abdroid.medicalapp.common.AppBottomNavigation
 import com.abdroid.medicalapp.common.BottomNavigationItem
 import com.abdroid.medicalapp.domain.model.Doctor
+import com.abdroid.medicalapp.presentation.appointment.AppointmentScreen
+import com.abdroid.medicalapp.presentation.chat.ChatScreen
 import com.abdroid.medicalapp.presentation.doctorDetails.DoctorDetailsScreen
 import com.abdroid.medicalapp.presentation.home.HomeScreen
 import com.abdroid.medicalapp.presentation.home.relatedScreens.TopDoctorScreen
@@ -44,25 +46,29 @@ fun NavGraph(
         BottomNavigationItem(
             iconOutlined = R.drawable.home_outlined,
             filled = R.drawable.home_filled,
+            contentDescription = "Home"
         ),
         BottomNavigationItem(
             iconOutlined = R.drawable.mail_outlined,
             filled = R.drawable.mail_filled,
+            contentDescription = "Messages"
         ),
         BottomNavigationItem(
             iconOutlined = R.drawable.calender_outlined,
             filled = R.drawable.calender_filled,
+            contentDescription = "Calendar"
         ),
         BottomNavigationItem(
             iconOutlined = R.drawable.profile_outlined,
             filled = R.drawable.profile_filled,
+            contentDescription = "Profile"
         ),
     )
 
     val navController = rememberNavController()
     val backStackState = navController.currentBackStackEntryAsState().value
     var selectedItem by rememberSaveable {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
 
     selectedItem = when (backStackState?.destination?.route) {
@@ -74,10 +80,12 @@ fun NavGraph(
     }
 
     val isBottomBarVisible = remember(key1 = backStackState) {
-        backStackState?.destination?.route == Route.HomeScreen.route ||
-                backStackState?.destination?.route == Route.MessageScreen.route ||
-                backStackState?.destination?.route == Route.ScheduleScreen.route ||
-                backStackState?.destination?.route == Route.ProfileScreen.route
+        backStackState?.destination?.route in listOf(
+            Route.HomeScreen.route,
+            Route.MessageScreen.route,
+            Route.ScheduleScreen.route,
+            Route.ProfileScreen.route
+        )
     }
 
     Scaffold(
@@ -125,12 +133,15 @@ fun NavGraph(
                 composable(route = Route.GetStartedScreen.route) {
                     GetStartedScreen(navController)
                 }
+
                 composable(route = Route.SignInScreen.route) {
                     SignInScreen(navController)
                 }
+
                 composable(route = Route.SignUpScreen.route) {
                     SignUpScreen(navController)
                 }
+
                 composable(route = Route.ForgotPasswordScreen.route) {
                     ForgotPasswordScreen(navController)
                 }
@@ -143,7 +154,6 @@ fun NavGraph(
                 composable(route = Route.HomeScreen.route) {
                     HomeScreen(
                         navController,
-                        navigateToSearch = {  },
                     )
                 }
                 composable(route = Route.TopDoctorScreen.route) {
@@ -159,18 +169,43 @@ fun NavGraph(
                         }
 
                 }
+
+                composable(route = Route.AppointmentScreen.route) {
+                    navController.previousBackStackEntry?.savedStateHandle?.get<Doctor?>("doctor")
+                        ?.let { doctor ->
+                            val day = navController.previousBackStackEntry?.savedStateHandle?.get<String>("day") ?: ""
+                            val date = navController.previousBackStackEntry?.savedStateHandle?.get<Int>("date") ?: 0
+                            val hour = navController.previousBackStackEntry?.savedStateHandle?.get<String>("hour") ?: ""
+                            val reason = navController.previousBackStackEntry?.savedStateHandle?.get<String>("reason") ?: ""
+
+                            AppointmentScreen(
+                                navController = navController,
+                                doctor = doctor,
+                                day = day,
+                                date = date,
+                                hour = hour,
+                                reason = reason
+                            )
+                        }
+                }
+
+                composable(route = Route.ChatScreen.route) {
+                    val doctor = navController.previousBackStackEntry?.savedStateHandle?.get<Doctor>("doctor")
+                    doctor?.let {
+                        ChatScreen(navController, it)
+                    }
+                }
+
                 composable(route = Route.MessageScreen.route) {
                     OnBackClickStateSaver(navController = navController)
-                    MessageScreen(
-                        navController,
-                    )
+                    MessageScreen()
                 }
+
                 composable(route = Route.ScheduleScreen.route) {
                     OnBackClickStateSaver(navController = navController)
-                    ScheduleScreen(
-                        navController,
-                    )
+                    ScheduleScreen()
                 }
+
                 composable(route = Route.ProfileScreen.route) {
                     OnBackClickStateSaver(navController = navController)
                     ProfileScreen(
@@ -197,8 +232,8 @@ fun OnBackClickStateSaver(navController: NavController) {
 
 private fun navigateToTab(navController: NavController, route: String) {
     navController.navigate(route) {
-        navController.graph.startDestinationRoute?.let { screen_route ->
-            popUpTo(screen_route) {
+        navController.graph.startDestinationRoute?.let { screenRoute ->
+            popUpTo(screenRoute) {
                 saveState = true
             }
         }

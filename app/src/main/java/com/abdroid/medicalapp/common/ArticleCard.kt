@@ -1,4 +1,4 @@
-package com.abdroid.medicalapp.presentation.home.components
+package com.abdroid.medicalapp.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,7 +56,7 @@ fun TrendingArticleCard(
                     .fillMaxWidth()
                     .height(130.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                painter = rememberAsyncImagePainter(model = article.image), // Use Coil to load the doctor's image
+                painter = rememberAsyncImagePainter(model = article.image),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.TopCenter,
                 contentDescription = "image"

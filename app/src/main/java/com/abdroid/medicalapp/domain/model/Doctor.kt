@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Doctor(
-    @PrimaryKey val id: Int = 0, // Provide a default value
+    @PrimaryKey val id: Int = 0,
     val name: String = "",
     val specialty: String = "",
     val image: String = "",
@@ -16,7 +16,6 @@ data class Doctor(
     val distance: Int = 0,
     val rate: Double = 0.0
 ) : Parcelable {
-    // No-argument constructor required by Firebase
     constructor() : this(
         id = 0,
         name = "",

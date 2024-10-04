@@ -44,7 +44,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
 
     }
-    override fun registerUser(name: String, email: String, password: String, confirmPassword: String): Flow<Resource<AuthResult>> {
+    override fun registerUser(name: String, email: String, password: String): Flow<Resource<AuthResult>> {
         return flow {
             emit(Resource.Loading())
 
@@ -85,13 +85,11 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     private fun isValidEmail(email: String): Boolean {
-        // Regex pattern for email validation
         val pattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
         return email.matches(pattern.toRegex())
     }
 
     private fun isValidPassword(password: String): Boolean {
-        // Add your password criteria here, for example, minimum length
         val pattern = "(?=.*[a-z])(?=.*\\d).{6,}"
         return password.matches(pattern.toRegex())
     }

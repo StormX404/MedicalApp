@@ -42,7 +42,7 @@ fun TopAppBar(
                 .clip(CircleShape)
                 .clickable(
                     onClick = {
-                        navController.popBackStack()
+                       navController.popBackStack()
                     },
                 ),
             painter = painterResource(id = R.drawable.arrow_left),

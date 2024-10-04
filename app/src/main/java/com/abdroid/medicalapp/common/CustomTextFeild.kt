@@ -139,7 +139,7 @@ fun NameTextField(
             },
         value = transformedName,
         onValueChange = { newValue ->
-            if (newValue.length <= 15) {
+            if (newValue.length <= 60) {
                 onNameChange(newValue)
             }
         },
@@ -340,6 +340,148 @@ fun PasswordTextField(
                         )
                     }
                 }
+            }
+        }
+    )
+}
+
+@Composable
+fun CustomTextField(
+    hintValue: String,
+    text: String,
+    leadingIcon: Painter,
+    onTextChange: (String) -> Unit
+) {
+    val transformedName = remember(text) {
+        text.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+    }
+
+    var isNameFocused by remember { mutableStateOf(false) }
+
+    BasicTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .border(
+                1.dp,
+                colorResource(id = R.color.text_field_border),
+                shape = RoundedCornerShape(22.dp)
+            )
+            .clip(RoundedCornerShape(22.dp))
+            .background(colorResource(id = R.color.text_field_bg))
+            .padding(8.dp)
+            .onFocusChanged { focusState ->
+                isNameFocused = focusState.isFocused
+            },
+        value = transformedName,
+        onValueChange = { newValue ->
+            if (newValue.length <= 60) {
+                onTextChange(newValue)
+            }
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle(
+            color = colorResource(id = R.color.text_field_text),
+            fontSize = 16.sp,
+            fontFamily = InterFont,
+            fontWeight = FontWeight.Normal,
+        ),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = leadingIcon,
+                    contentDescription = null,
+                    tint = if (isNameFocused) Color(0xFF50AAFA) else colorResource(id = R.color.text_field_hint)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Box(modifier = Modifier.weight(1f)) {
+                    if (text.isEmpty()) {
+                        Text(
+                            text = hintValue,
+                            fontSize = 16.sp,
+                            fontFamily = InterFont,
+                            fontWeight = FontWeight.Normal,
+                            color = colorResource(id = R.color.text_field_hint)
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        }
+    )
+}
+
+@Composable
+fun MessageTextField(
+    modifier: Modifier,
+    hintValue: String,
+    text: String,
+    leadingIcon: Painter,
+    onTextChange: (String) -> Unit
+) {
+
+    BasicTextField(
+        modifier = modifier
+            .height(60.dp)
+            .border(
+                1.dp,
+                colorResource(id = R.color.text_field_border),
+                shape = RoundedCornerShape(85.dp)
+            )
+            .clip(RoundedCornerShape(85.dp))
+            .background(colorResource(id = R.color.background))
+            .padding(8.dp),
+        value = text,
+        onValueChange = { newValue ->
+            if (newValue.length <= 60) {
+                onTextChange(newValue)
+            }
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle(
+            color = colorResource(id = R.color.text_field_text),
+            fontSize = 16.sp,
+            fontFamily = InterFont,
+            fontWeight = FontWeight.Normal,
+        ),
+        decorationBox = { innerTextField ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Spacer(modifier = Modifier.width(10.dp))
+                Box(modifier = Modifier.weight(1f)) {
+                    if (text.isEmpty()) {
+                        Text(
+                            text = hintValue,
+                            fontSize = 16.sp,
+                            fontFamily = InterFont,
+                            fontWeight = FontWeight.Normal,
+                            color = colorResource(id = R.color.text_field_hint)
+                        )
+                    }
+                    innerTextField()
+                }
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = leadingIcon,
+                    contentDescription = null,
+                    tint = colorResource(id = R.color.text_field_hint)
+                )
             }
         }
     )

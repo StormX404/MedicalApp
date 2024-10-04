@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">#FFFFFF</color>
+    <color name="profile_background">#45c3b9</color>
 
     <color name="splash_color">#50AAFA</color>
 
@@ -43,5 +44,7 @@
     <color name="rate_box_color">#e8f3f1</color>
     <color name="dialog_icon_background">#f5f8ff</color>
     <color name="dialog_icon_color">#50AAFA</color>
+    <color name="confirmed_dot_color">#7beb78</color>
+    <color name="rose_color">#ff5c5c</color>
 
 </resources>

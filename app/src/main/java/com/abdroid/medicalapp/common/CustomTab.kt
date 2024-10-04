@@ -33,7 +33,7 @@ fun CustomTab(
     selectedItemIndex: Int,
     items: List<String>,
     modifier: Modifier = Modifier,
-    tabWidth: Dp = 200.dp,
+    tabWidth: Dp = 200.dp, // Set the desired width for each tab
     onClick: (index: Int) -> Unit,
 ) {
     val indicatorOffset: Dp by animateDpAsState(
@@ -49,8 +49,8 @@ fun CustomTab(
                 1.dp,
                 colorResource(id = R.color.text_field_border),
                 CircleShape
-            ) // Add border here
-            .height(56.dp), // Set height to 56.dp
+            )
+            .height(56.dp),
     ) {
         MyTabIndicator(
             indicatorWidth = tabWidth,
@@ -98,8 +98,8 @@ private fun MyTabItem(
                 onClick()
             }
             .width(tabWidth)
-            .height(56.dp), // Ensure the Box has a height of 56.dp
-        contentAlignment = Alignment.Center // Center the content
+            .height(56.dp),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,

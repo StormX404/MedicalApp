@@ -23,6 +23,7 @@ daggerHiltCompiler = "2.51.1"
 daggerHiltAndroidx = "1.2.0"
 
 # Navigation :->
+lottieVersion = "6.4.0"
 navigationCompose = "2.7.7"
 kotlinxSerializationJson = "1.7.1"
 
@@ -97,6 +98,7 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieVersion" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 
 

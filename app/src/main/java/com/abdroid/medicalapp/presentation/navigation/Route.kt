@@ -22,6 +22,10 @@ sealed class Route(
 
      data object DoctorDetailsScreen : Route(route = "doctorDetailsScreen")
 
+     data object AppointmentScreen : Route(route = "appointmentScreen")
+
+     data object ChatScreen : Route(route = "chatScreen")
+
      data object MessageScreen : Route(route = "messageScreen")
 
      data object ScheduleScreen : Route(route = "scheduleScreen")

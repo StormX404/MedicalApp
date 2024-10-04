@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.Flow
 interface DoctorDao {
 
     @Query("SELECT * FROM Doctor")
-    fun getAllStatues(): Flow<List<Doctor>>
+    fun getAllDoctors(): Flow<List<Doctor>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStatue(statue: Doctor)
+    suspend fun insertDoctor(statue: Doctor)
 
     @Delete
-    suspend fun deleteStatue(statue: Doctor)
+    suspend fun deleteDoctor(statue: Doctor)
 
     @Query("SELECT * FROM Doctor WHERE name =:name")
-    suspend fun getStatue(name: String): Doctor?
+    suspend fun getDoctor(name: String): Doctor?
 }

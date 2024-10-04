@@ -1,4 +1,4 @@
-package com.abdroid.medicalapp.presentation.home.components
+package com.abdroid.medicalapp.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

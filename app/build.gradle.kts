@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -124,6 +125,9 @@ dependencies {
     implementation (libs.androidx.animation)
     implementation (libs.androidx.fragment.ktx)
     implementation (libs.androidx.activity.ktx)
+
+    //lottie animation
+    implementation (libs.lottie.compose)
 
 }
 
