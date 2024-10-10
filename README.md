@@ -7,7 +7,7 @@ A medical app that displays a list of doctors and articles, allowing users to bo
 ## 📱Screenshots of the App 
 <div>
     <img width="216" src="https://github.com/user-attachments/assets/c567183d-8f40-4252-ae3e-404fa0f67349">
-    <img width="216" src="https://github.com/user-attachments/assets/99f9d6d0-7488-49c8-b6e2-7e3e912d4e9e)">
+    <img width="216" src="https://github.com/user-attachments/assets/99f9d6d0-7488-49c8-b6e2-7e3e912d4e9e">
     <img width="216" src="https://github.com/user-attachments/assets/69268df8-eed0-4dd9-b65e-d011e2ff3b48">
     <img width="216" src="https://github.com/user-attachments/assets/39a3b6d2-08ce-4571-8fff-19f43cedc003">
 </div>
