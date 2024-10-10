@@ -13,6 +13,23 @@ This app offers an intuitive and user-friendly interface for managing healthcare
 
 ---
 
+
+## :rocket: Technologies
+
+The app is built using modern Android development tools and technologies:
+
+- **Android Studio**
+- **Kotlin** for robust and scalable development.
+- **Firebase Authentication** to manage secure user sign-ins.
+- **Firebase Realtime Database** for real-time data synchronization.
+- **Coroutines** for asynchronous programming and improved performance.
+- **Dagger Hilt** for dependency injection and efficient app architecture.
+- **Coil** for image loading and caching.
+- **Datastore** for persistent key-value storage.
+- **Lottie Animation** for rich animations and a smooth UI experience.
+
+---
+
 ## 📱 App Screenshots
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
@@ -34,22 +51,6 @@ This app offers an intuitive and user-friendly interface for managing healthcare
     <img width="216" src="https://github.com/user-attachments/assets/4222c259-41b1-4288-addb-1ce275ff8fdf" alt="Screenshot 16">
     <img width="216" src="https://github.com/user-attachments/assets/337a0b98-575c-4aae-8894-22ecc9d65c55" alt="Screenshot 17">
 </div>
-
----
-
-## :rocket: Technologies
-
-The app is built using modern Android development tools and technologies:
-
-- **Android Studio**
-- **Kotlin** for robust and scalable development.
-- **Firebase Authentication** to manage secure user sign-ins.
-- **Firebase Realtime Database** for real-time data synchronization.
-- **Coroutines** for asynchronous programming and improved performance.
-- **Dagger Hilt** for dependency injection and efficient app architecture.
-- **Coil** for image loading and caching.
-- **Datastore** for persistent key-value storage.
-- **Lottie Animation** for rich animations and a smooth UI experience.
 
 ---
 
